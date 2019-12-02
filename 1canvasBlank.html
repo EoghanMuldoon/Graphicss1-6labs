@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+
+    <style type="text/css">
+	
+    </style>
+
+  </head>
+
+  <body>
+
+    <canvas id="canvasOne" width="500" height="300" style="border:solid Black;" ></canvas>
+
+    <script type="text/javascript">
+		// Gets a handle to the element with id canvasOne.
+		var canvas = document.getElementById("canvasOne");
+		// Set the canvas up for drawing in 2D.
+		if(canvas.getContext){
+			var ctx = canvas.getContext('2d');
+			ctx.fillStyle= "rgb(0,0,255)";
+			ctx.font="20px Arial";
+			ctx.fillText("Éoghan Muldoon", 10, 30);
+			// Set the fill colour to bright red.
+			ctx.fillStyle= "rgb(255,0,0)";
+			// Create a filled rectangle 
+			ctx.fillRect(100,50,100 ,100);
+			
+			ctx.fillStyle= "rgb(0,0,0)";
+			ctx.strokeRect(100,50,100 ,100);
+			
+			//triangle
+			ctx.fillStyle= "rgba(0,255,0,0.4)";
+			ctx.beginPath();
+			ctx.moveTo(150,50);
+			ctx.lineTo(150,100);
+			ctx.lineTo(250,100);
+			ctx.closePath();
+			ctx.fill();
+			ctx.fillStyle= "rgba(0,0,0,0.4)";
+			ctx.stroke();
+			
+			//circle
+			ctx.beginPath();
+			ctx.fillStyle= "rgb(0,0,255)";
+			ctx.arc(325,100, 50, 0, 2*Math.PI);
+			ctx.fill();
+			ctx.fillStyle= "rgba(0,0,0,0.4)";
+			ctx.stroke();
+			
+			ctx.beginPath();
+			ctx.fillStyle= "rgb(255,0,255)";
+			ctx.arc(125,225, 25, 0, 2*Math.PI);
+			ctx.fill();
+			ctx.fillStyle= "rgba(0,0,0,0)";
+			ctx.stroke();
+			
+			//circle wiith square in it
+			/*ctx.beginPath();
+			ctx.fillStyle= "rgb(0,255,255)";
+			ctx.arc(225,225, 50, 0, 2*Math.PI);
+			ctx.fill();
+			ctx.fillStyle= "rgb(0,0,0)";
+			ctx.stroke();
+			
+			ctx.fillStyle= "rgba(0,255,0,0.4)";
+			ctx.beginPath();
+			//center of circle - radius on x
+			ctx.moveTo(175,225);
+			ctx.lineTo(225,175);
+			ctx.lineTo(275,225);
+			ctx.lineTo(225,275);
+			ctx.closePath();
+			ctx.fill();
+			ctx.fillStyle= "rgba(0,0,0,0.4)";
+			ctx.stroke();
+			*/
+			
+			//circle wiith square in it
+			ctx.fillStyle= "rgb(0,255,255)";
+			ctx.fillRect(200,175,100 ,100);
+			ctx.strokeRect(200,175,100 ,100);
+			
+			
+			ctx.beginPath();
+			ctx.arc((200+300)/2,(175+275)/2,(Math.sqrt(Math.pow(100,2)+Math.pow(100,2)))/2, 0, 2*Math.PI);
+			ctx.fillStyle= "rgb(0,0,0)";
+			ctx.stroke();
+			
+			//pac man
+			ctx.beginPath();
+			ctx.fillStyle= "rgb(255,255,0)";
+			ctx.arc(375,225, 25, 0.25*Math.PI, 1.75*Math.PI);
+			ctx.lineTo(375,225);
+			ctx.lineTo(375+(25*Math.sin(.25*Math.PI)),225+(25*Math.cos(.25*Math.PI)));
+			ctx.fill();
+			ctx.fillStyle= "rgba(0,0,0,0)";
+			ctx.stroke();
+			
+			var myVar = setTimeout(myTimer, 3000);
+
+			function myTimer() {
+			ctx.clearRect(100, 50, 150, 100 );
+			
+			ctx.fillStyle= "rgb(255,0,0)";
+			// Create a filled rectangle 
+			ctx.fillRect(100,50,100 ,100);
+			
+			ctx.fillStyle= "rgb(0,0,0)";
+			ctx.strokeRect(100,50,100 ,100);
+			
+			
+			ctx.fillStyle= "rgba(0,255,0,0.4)";
+			ctx.beginPath();
+			ctx.moveTo(250,50);
+			ctx.lineTo(250,100);
+			ctx.lineTo(350,100);
+			ctx.closePath();
+			ctx.fill();
+			ctx.fillStyle= "rgba(0,0,0,0.4)";
+			ctx.stroke();
+			}
+
+			
+		}else {
+		}
+	  
+		
+    </script>
+
+  </body>
+
+</html>
+

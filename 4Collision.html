@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+
+    <style type="text/css">
+      body {
+          background-color: white;
+      }
+    </style>
+
+  </head>
+
+  <body>
+	
+	<h1>Éoghan Muldoon</h1>
+    <canvas id="canvas-for-ball" width="500" height="300" style="border:solid Black";></canvas>
+
+    <script type="text/javascript">
+      // Gets a handle to the element with id canvasOne.
+      var canvas = document.getElementById("canvas-for-ball");
+      // Get a 2D context for the canvas.
+      var ctx = canvas.getContext("2d");
+      
+      // The vertical location of the ball.
+      
+	  class Ball{ 
+		 constructor(x, y, velX, velY, r, c)
+		{
+			this.x=x;
+			this.y=y;
+			this.velX=velX;
+			this.velY=velY;
+			this.radius=r;
+			this.c=c;
+		}
+		
+		draw()
+		{
+			if(this.c==1)
+			{
+				ctx.fillStyle= "rgb(0,255,0)";
+			}
+			else if(this.c==2)
+			{
+				ctx.fillStyle= "rgb(0,0,255)";
+			}
+			else
+			{
+				ctx.fillStyle= "rgb(255,255,255)";
+			}
+			
+			ctx.beginPath();
+			ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+			ctx.fill();
+		}
+		
+		fall()
+		{
+			
+			this.y+=this.velY;
+			this.x+=this.velX;
+			
+			if (this.y>(300-this.radius-1))
+			{
+				this.velY=this.velY*-1;
+			}
+			else if(this.y<(this.radius+1)) 
+			{
+				this.velY=this.velY*-1;
+				
+			}
+			
+			if (this.x>(500-this.radius-1))
+			{
+				this.velX=this.velX*-1;
+				
+			}
+			else if(this.x<(this.radius+1)) 
+			{
+				this.velX=this.velX*-1;
+				
+			}
+		}
+	  }
+	 
+	  
+      // A function to repeat every time the animation loops.
+	  var radius=20;
+	  var radius2=20;
+	  var coll=0;
+	  ball2= new Ball(100, 100, 1, 0, radius, 1);
+	  ball3= new Ball(25, 100 , 2, 0, radius2, 2);
+      function repeatme() {
+	  
+	  ctx.clearRect(0,0,500 ,300);
+	  
+	  if(Math.sqrt(Math.pow((ball2.x- ball3.x),2)+Math.pow((ball2.y- ball3.y),2))<=radius+radius2)
+	  {
+		
+		dx= ball2.x-ball3.x; //calculate horizontal distance between balls
+		dy= ball2.y-ball3.y; //calculate vertial distance between balls
+		collisiion_angle=Math.atan2(dy,dx);
+		//calculate the ball  speed, here called the magnitude 
+		magnitude_2= Math.sqrt(ball2.xVel*ball2.xVel+ball2.yVel*ball2.yVel);
+		//calculate second ball the same way 
+		magnitude_3= Math.sqrt(ball3.xVel*ball3.xVel+ball3.yVel*ball3.yVel);
+		//determine balls' direction using trigonometry
+		direction_2=Math.atan2(ball2.yVel, ball2.xVel);
+		direction_3=Math.atan2(ball3.yVel, ball3.xVel);
+		//calculate new xVel using trig applied to the difference between the direction
+		new_xVel_2=magnitude_2* Math.cos(direction_2-collisiion_angle);
+		//same thing for other vectors: ball 1 yVel and ball 2 xVel and yVel
+		new_yVel_2=magnitude_2* Math.sin(direction_2-collisiion_angle);
+		new_xVel_3=magnitude_3* Math.cos(direction_3-collisiion_angle);
+		new_yVel_3=magnitude_3* Math.sin(direction_3-collisiion_angle);
+		//determine final x speed for ball 2
+		 final_xVel_2 = ((ball2.mass - ball3.mass)*new_xVel_2+(ball3.mass+ball3.mass)*new_xVel_2)/(ball2.mass+ball3.mass);
+		//determine final y speed for ball 2
+	 	final_xVel_3 = ((ball2.mass + ball2.mass)*new_xVel_2+(ball3.mass+ball2.mass)*new_xVel_2)/(ball2.mass+ball3.mass);
+		//y speed does not change if it a 1d collision
+		final_yVel_2=new_yVel_2;
+		final_yVel_3=new_yVel_2;
+		
+		ball2.xvel=Math.cos(collisiion_angle)*final_xVel_2+Math.cos(collisiion_angle+Math.PI/2)*final_yVel_2;
+		ball2.yvel=Math.sin(collisiion_angle)*final_xVel_2+Math.cos(collisiion_angle+Math.PI/2)*final_yVel_2;
+		ball3.xvel=Math.cos(collisiion_angle)*final_xVel_3+Math.cos(collisiion_angle+Math.PI/2)*final_yVel_3;
+		ball3.xvel=Math.cos(collisiion_angle)*final_xVel_3+Math.cos(collisiion_angle+Math.PI/2)*final_yVel_3;
+		
+		
+	  }
+	 
+	  // Draw the ball (stroked, not filled).
+	  ball2.draw();
+	  ball2.fall();
+	  
+	  ball3.draw();
+	  ball3.fall();
+	  
+     
+	
+			window.requestAnimationFrame(repeatme);
+		
+      }
+	  
+      // Get the animation going.
+		repeatme();
+		
+		 
+    </script>
+
+  </body>
+
+</html>
